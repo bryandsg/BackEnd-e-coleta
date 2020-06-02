@@ -1,0 +1,4 @@
+tsc = cli typescript
+@types possui algumas das tipagens para serem utilizada com os pacotes instalados
+-D salva como dependencia de desenvolvimento
+tsc-node e tsc-node-dev são pacotes para compilar o typescript
