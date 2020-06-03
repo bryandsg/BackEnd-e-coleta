@@ -2,3 +2,22 @@ tsc = cli typescript
 @types possui algumas das tipagens para serem utilizada com os pacotes instalados
 -D salva como dependencia de desenvolvimento
 tsc-node e tsc-node-dev são pacotes para compilar o typescript
+
+
+Entidades
+points
+  image
+  name
+  email
+  whatsapp
+  latitude
+  longitude
+  city
+  uf  
+items
+  image
+  title
+
+pontos_items
+  item_id
+  point_id
