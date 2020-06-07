@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import knex from '../database/connection'
+import Utils from '../utils/Utils';
 
 class PointsController {
 
@@ -18,7 +19,7 @@ class PointsController {
         const trx = await knex.transaction();
         
         const newPoint = {
-            image: "mock",
+            image: request.file.filename,
             name,
             email,
             phone,
@@ -29,8 +30,12 @@ class PointsController {
         };
 
        const insertedIds = await trx('points').insert(newPoint);
+
         let point_id = insertedIds[0]
-        let pointItems = items.map((item_id: Number) => {
+        let pointItems = items
+        .split(',')
+        .map( (item: string) => Number(item.trim()))
+        .map((item_id: Number) => {
             return {
                 item_id,
                 point_id
@@ -61,8 +66,9 @@ class PointsController {
         .join('points_items', 'items.id', '=', 'points_items.item_id')
         .where('points_items.point_id', id)
         .select('items.title','items.image');
-
-        return response.json({point, items});
+        
+        const serializedPoint = Utils.serialize([point])[0];
+        return response.json({serializedPoint, items});
     }
 
     async index( request: Request, response: Response) {
@@ -78,7 +84,9 @@ class PointsController {
         .distinct()
         .select('points.*');
 
-        return response.json(points);
+        const serializedPoints = Utils.serialize(points);
+
+        return response.json(serializedPoints);
 
     }
 }
