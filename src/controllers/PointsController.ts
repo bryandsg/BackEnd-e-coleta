@@ -68,7 +68,7 @@ class PointsController {
         .select('items.title','items.image');
         
         const serializedPoint = Utils.serialize([point])[0];
-        return response.json({serializedPoint, items});
+        return response.json({ point:serializedPoint, items});
     }
 
     async index( request: Request, response: Response) {
